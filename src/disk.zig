@@ -41,13 +41,6 @@ const DiskManager = struct {
         const offset = PAGE_SIZE * page_id;
         // ページ先頭へシーク
         try self.heap_file.seekTo(offset);
-
-        // ファイルが読み取り用に開かれていることを確認
-        const access_mode = try self.heap_file.getAccessMode();
-        if (access_mode & .readable == 0) {
-            return error.NotOpenForReading;
-        }
-
         // データを読み出す
         return try self.heap_file.read(data);
     }
